@@ -3,7 +3,7 @@ const mongoose = require("mongoose")
 const cors = require('cors')
 const app = express()
 app.use(express.json())
-const PORT = 3000
+const PORT = 3001
 
 mongoose.connect("mongodb+srv://parth:parth123@cluster0.p8uxm69.mongodb.net/RealEstate").then(() => {
     console.log("Database Connected Successfully");
