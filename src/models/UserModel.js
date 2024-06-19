@@ -17,6 +17,7 @@ const userSchema = new schema({
     role:{
       type : String,
     }
+    
   });
 
   module.exports = mongoose.model("User",userSchema);

@@ -21,6 +21,7 @@ const addFlat = async(req,res) => {
         review:req.body.review,
         availabilityForRent:req.body.availabilityForRent,
         society:req.body.society,
+        //im
     }
 
     const newFlat = await flatschema.create(flatDetails);
