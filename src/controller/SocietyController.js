@@ -92,8 +92,9 @@ const  getSingleSociety = async (req,res)=>{
             message:"Society not Fetched Successfully"
         })
     }
+    
+    }
 
-}
 
 
 

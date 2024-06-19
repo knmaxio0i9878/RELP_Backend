@@ -6,5 +6,6 @@ router.post('/insertflat',flatController.addFlat)
 router.delete('/deleteflat/:id',flatController.deleteFlat)
 router.put('/updateflat/:id',flatController.updateFlat)
 router.get('/singleflat/:id',flatController.getSingleFlat)
+router.get('/getSocietyByFlatId/:flatId',flatController.getSocietyByFlatId)
 
 module.exports = router;

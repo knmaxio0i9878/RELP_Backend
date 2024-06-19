@@ -15,7 +15,7 @@ const addList = async (req, res) => {
         list: req.body.list
     }
 
-    const newList = await plotSchema.create(listDetails);
+    const newList = await todoschema.create(listDetails);
     res.status(201).json({
         data: newList,
         message: 'New List Added'
