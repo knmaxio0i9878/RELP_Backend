@@ -8,7 +8,7 @@ const uploadimg = async(file) =>{
         api_secret: "eH0S3MUCT-Fi74nU2iJ4qiqMNqE" 
       });
       const result = await cloudinary.uploader.upload(file.path)
-      return result
+      return result;
 }
 module.exports = {
     uploadimg
