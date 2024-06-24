@@ -91,7 +91,7 @@ const getSingleUser = async (req, res) => {
             message: "user not Fetched Successfully"
         })
     }
-}}
+}
 const storage = multer.diskStorage({
     destination: "./upload/",
     filename: function (req, file, cb) {
