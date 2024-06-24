@@ -91,59 +91,55 @@ const getSingleUser = async (req, res) => {
             message: "user not Fetched Successfully"
         })
     }
+}
+const storage = multer.diskStorage({
+    destination: "./upload/",
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+})
 
-    const storage = multer.diskStorage({
-        destination: "./upload/",
-        filename: function (req, file, cb) {
-            cb(null, file.originalname)
+const upload = multer({
+    storage: storage,
+    fileFilter: function (req, file, cb) {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/txt") {
+            cb(null, true);
         }
-    })
-
-    const upload = multer({
-        storage: storage,
-        fileFilter: function (req, file, cb) {
-            if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/txt") {
-                cb(null, true);
-            }
-            else {
-                cb(null, false);
-            }
-        }
-    }).single("makaanFile");
-
-    const uploadFile = async (req, res) => {
-        try {
-            upload(req, res, async (err) => {
-                if (err) {
-                    res.status(500).json({
-                        message: "File Upload Failed"
-                    })
-                }
-                else {
-                    if (req.file !== undefined) {
-                        const fileFetched = await cloudinaryUpload.uploadimg(req.file)
-                        res.status(200).json({
-                            file: req.file.originalname,
-                            cloudinaryData: result,
-                            message: "File Uploaded Successfully",
-                        })
-                    }
-
-                }
-            })
-        }
-        catch (error) {
-            res.status(500).json({
-                message: "File Upload Failed"
-            })
+        else {
+            cb(null, false);
         }
     }
+}).single("makaanFile");
+
+const uploadFile = async (req, res) => {
+    try {
+        upload(req, res, async (err) => {
+            if (err) {
+                console.log('if...',err);
+                res.status(500).json({
+                    message: "File Upload Failed"
+                })
+            }
+            else {
+                if (req.file !== undefined) {
+                    const fileFetched = await cloudinaryUpload.uploadimg(req.file)
+                    res.status(200).json({
+                        file: req.file.originalname,
+                        cloudinaryData: fileFetched,
+                        message: "File Uploaded Successfully",
+                    })
+                }
+
+            }
+        })
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "File Upload Failed"
+        })
+    }
 }
-
-
-
-
-
 module.exports = {
     getUsers,
     addUser,
