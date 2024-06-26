@@ -7,5 +7,6 @@ router.delete('/deleteuser/:id',userController.deleteUser)
 router.put('/updateuser/:id',userController.updateUser)
 router.get('/singleuser/:id',userController.getSingleUser)
 router.post('/upload',userController.uploadFile)
+router.post('/login',userController.loginUser)
 
 module.exports = router;

@@ -140,11 +140,30 @@ const uploadFile = async (req, res) => {
         })
     }
 }
+
+const loginUser = async(req,res) =>{
+ 
+    const email = req.body.email
+    const password = req.body.password
+    const user = await userSchema.findOne({email:email,password:password})
+    if(user){
+        res.status(200).json({
+            message:"Login Successfull",
+            user:user
+        })
+    }else{
+        res.status(400).json({
+            user:user,
+            message:"Login Failed"
+        })
+    }
+}
 module.exports = {
     getUsers,
     addUser,
     updateUser,
     deleteUser,
     getSingleUser,
-    uploadFile
+    uploadFile,
+    loginUser
 }
