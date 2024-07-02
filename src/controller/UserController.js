@@ -8,6 +8,8 @@ const cloudinaryUpload = require("./CloudinaryUtil")
 
 const getUsers = async (req, res) => {
 
+
+
     const allUsers = await userSchema.find()
     res.status(200).json({
         data: allUsers,
@@ -115,7 +117,7 @@ const uploadFile = async (req, res) => {
     try {
         upload(req, res, async (err) => {
             if (err) {
-                console.log('if...',err);
+                console.log('if...', err);
                 res.status(500).json({
                     message: "File Upload Failed"
                 })
@@ -141,22 +143,31 @@ const uploadFile = async (req, res) => {
     }
 }
 
-const loginUser = async(req,res) =>{
- 
+const loginUser = async (req, res) => {
+
     const email = req.body.email
-    const password = req.body.password
-    const user = await userSchema.findOne({email:email,password:password})
-    if(user){
-        res.status(200).json({
-            message:"Login Successfull",
-            user:user
-        })
-    }else{
+    const pass = req.body.password
+    const userEmail = await userSchema.findOne({ email: email })
+    if (userEmail) {
+        const isMatch = await password.comparepassword(pass, userEmail.password)
+        if (isMatch) {
+            res.status(200).json({
+                user: userEmail,
+                message: "Login Successfull",
+            })
+        }
+        else {
+            res.status(400).json({
+                message: "Incorrect Password"
+            })
+        }
+    } else {
         res.status(400).json({
-            user:user,
-            message:"Login Failed"
+            user: userEmail,
+            message: "User Not Found"
         })
     }
+
 }
 module.exports = {
     getUsers,
