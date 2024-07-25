@@ -53,7 +53,7 @@ const addFlat = async (req, res) => {
                     user: req.body.user,
                     review: req.body.review,
                     availabilityForRent: req.body.availabilityForRent,
-                    society: req.body.society,
+                    // society: req.body.society,
                     imgUrl:result.secure_url
                 }
             
