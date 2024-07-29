@@ -35,9 +35,9 @@ const flatSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Society"
     },
-    imgUrl:[{
+    imgUrl:{
         type:String
-    }]
+    }
 })
 
 module.exports = mongoose.model("Flat",flatSchema)

@@ -3,7 +3,7 @@ const tokenUtil = require('../util/TokenUser')
 const password = require('../util/PasswordEncrypt')
 const Mail = require('../util/Email')
 const multer = require("multer");
-const cloudinaryUpload = require("./Cloudinary")
+const cloudinaryUpload = require("./CloudinaryUtil")
 
 
 const getUsers = async (req, res) => {

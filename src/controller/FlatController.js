@@ -1,4 +1,6 @@
 const flatschema = require('../models/FlatModel')
+const multer = require('multer')
+const cloudinary = require('./CloudinaryUtil')
 const getAllFlat = async (req, res) => {
 
     const flats = await flatschema.find().populate(['user', 'society']);
@@ -7,28 +9,69 @@ const getAllFlat = async (req, res) => {
         message: "Successfully got all the flats"
     })
 }
+const storage = multer.diskStorage({
+    destination: "./upload/",
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+})
+
+const upload = multer({
+    storage: storage,
+    fileFilter: function (req, file, cb) {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/txt") {
+            cb(null, true);
+        }
+        else {
+            cb(null, false);
+        }
+    }
+}).single("makaanFile");
+
 
 const addFlat = async (req, res) => {
 
-    const flatDetails = {
-        type: req.body.type,
-        interiorType: req.body.interiorType,
-        sqrFt: req.body.sqrFt,
-        price: req.body.price,
-        status: req.body.status,
-        location: req.body.location,
-        user: req.body.user,
-        review: req.body.review,
-        availabilityForRent: req.body.availabilityForRent,
-        society: req.body.society,
-        //im
-    }
+    try {
+        upload(req, res, async (err) => {
+            if (err) {
+                console.log('if...',err);
+                res.status(500).json({
+                    message: "File Upload Failed"
+                })
+            }
 
-    const newFlat = await flatschema.create(flatDetails);
-    res.status(201).json({
-        data: newFlat,
-        message: 'New Flat Created'
-    })
+            else {
+                const result = await cloudinary.uploadimg(req.file)
+                console.log("result..",result)
+                const flatDetails = {
+                    type: req.body.type,
+                    interiorType: req.body.interiorType,
+                    sqrFt: req.body.sqrFt,
+                    price: req.body.price,
+                    status: req.body.status,
+                    location: req.body.location,
+                    user: req.body.user,
+                    review: req.body.review,
+                    availabilityForRent: req.body.availabilityForRent,
+                    // society: req.body.society,
+                    imgUrl:result.secure_url
+                }
+            
+                const newFlat = await flatschema.create(flatDetails);
+                res.status(201).json({
+                    data: newFlat,
+                    message: 'New Flat Created'
+                })
+            }
+        })
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: "File Upload Failed"
+        })
+    }
+    
 }
 
 const deleteFlat = async (req, res) => {
