@@ -76,11 +76,11 @@ const updateSociety = async (req,res) => {
         })
     }
 }
-
+    
 const  getSingleSociety = async (req,res)=>{
 
     const id = req.body.id;
-    const society = await societySchema.findOne(id)
+    const society = await societySchema.findOne(id).populate("user")
     if(society){
         res.status(200).json({
             data:society,
