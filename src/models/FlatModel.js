@@ -35,6 +35,12 @@ const flatSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Society"
     },
+    city:{
+        type:String,
+    },
+    address:{
+        type:String
+    },
     imgUrl:{
         type:String
     }

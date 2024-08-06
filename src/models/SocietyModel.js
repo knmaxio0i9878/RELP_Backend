@@ -31,6 +31,9 @@ const societySchema =new schema({
     constructionStatus:{
         type:String
     },
+    units:{
+        type:Number
+    },
     user:{
         type :schema.Types.ObjectId, 
         ref:'User',

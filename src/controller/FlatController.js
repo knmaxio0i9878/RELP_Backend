@@ -54,6 +54,8 @@ const addFlat = async (req, res) => {
                     review: req.body.review,
                     availabilityForRent: req.body.availabilityForRent,
                     // society: req.body.society,
+                    address:req.body.address,
+                    city:req.body.city,
                     imgUrl:result.secure_url
                 }
             
@@ -108,8 +110,8 @@ const updateFlat = async (req, res) => {
 
 const getSingleFlat = async (req, res) => {
 
-    const id = req.body.id;
-    const flat = await flatschema.findOne(id)
+    const id = req.params.id;
+    const flat = await flatschema.findById(id).populate("society").populate("user")
     if (flat) {
         res.status(200).json({
             data: flat,

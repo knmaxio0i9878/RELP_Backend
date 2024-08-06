@@ -27,6 +27,7 @@ const insertSociety = async(req,res)=>{
         floors:req.body.floors,
         parkingArea:req.body.parkingArea,
         constructionStatus:req.body.constructionStatus,
+        units:req.body.units,
         user:req.body.user
     }
 
