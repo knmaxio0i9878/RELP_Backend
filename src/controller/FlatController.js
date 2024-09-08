@@ -7,7 +7,7 @@ const getAllFlat = async (req, res) => {
     res.status(201).json({
         data: flats,
         message: "Successfully got all the flats"
-    })
+    })  
 }
 const storage = multer.diskStorage({
     destination: "./upload/",

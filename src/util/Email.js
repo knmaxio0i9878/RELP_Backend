@@ -1,27 +1,26 @@
 const mailer = require('nodemailer')
-const { create } = require('../models/AmenitiesModel')
 
-const sendingMail = async(to,subject,text) =>{
-   
+const sendingmail = async  (to,subject,text) => {
+
     const transporter = mailer.createTransport({
-        service:'gmail',
-        auth:{
-            user:"pmakwana1908@gmail.com",
-            pass:'ygpiwimazhbdotty'
+        service: 'gmail',
+        auth: {
+            user:'bhushandoshi75@gmail.com',
+            pass: 'tpch apnt onyb brbb'
         }
     })
-
-    const mailOptions = {
-        from: "pmakwana1908@gmail.com",
-        to: to,
-        subject: subject,
-        html:`<h1>${text}</h1>`
-      };
     
+    const mailOptions = {
+        from : 'bhushandoshi75@gmail.com',
+        to : to,
+        subject : subject ,
+        text : text
+    }
 
-    const response = await transporter.sendMail(mailOptions);
-    return response;
-
-
+    const mailers = await transporter.sendMail(mailOptions)
+    console.log("mailers ... ", mailers)
+    return mailers
 }
-module.exports={sendingMail,}
+module.exports={
+    sendingmail
+}
